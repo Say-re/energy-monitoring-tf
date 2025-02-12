@@ -41,7 +41,7 @@ resource "aws_dynamodb_table" "usr_energy_consumption" {
     }
 
     hash_key = "userId"
-    sort_key = "date"
+    range_key = "date"
 
     # GSI Setup
     global_secondary_index {
@@ -55,6 +55,24 @@ resource "aws_dynamodb_table" "usr_energy_consumption" {
 
     tags = {
         Name = "User Energy Consumption Table"
+        Environment = "Production"
+    }
+}
+
+resource "aws_dynamodb_table" "usr_energy_threshold" {
+    name = "usrEnergyThresholds"
+    billing_mode = "PAY_PER_REQUEST"
+
+    # Primary Key
+    attribute {
+        name = "userId"
+        type = "S"
+    }
+
+    hash_key = "userId"
+
+    tags = {
+        Name = "User Energy Consumption Thresholds"
         Environment = "Production"
     }
 }
